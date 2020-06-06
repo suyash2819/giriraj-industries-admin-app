@@ -35,7 +35,6 @@ const useStyles = (theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 });
-// const classes = useStyles();
 
 class SignIn extends Component {
   constructor(props) {

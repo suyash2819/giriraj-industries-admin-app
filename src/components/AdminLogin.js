@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import fire from "../config/FireBase";
+import { fire } from "../config/FireBase";
 
 const useStyles = (theme) => ({
   paper: {

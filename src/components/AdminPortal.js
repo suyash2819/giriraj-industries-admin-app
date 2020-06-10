@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import fire from "../config/FireBase";
+import { fire } from "../config/FireBase";
 import "../CSS/AdminPortal.css";
 import RenderForm from "./RenderForm";
 

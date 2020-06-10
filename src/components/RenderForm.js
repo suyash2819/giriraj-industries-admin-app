@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import fire, { storage } from "../config/FireBase";
+import { fire, storage } from "../config/FireBase";
 
 const useStyles = makeStyles((theme) => ({
   root: {

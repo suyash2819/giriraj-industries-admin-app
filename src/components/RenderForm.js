@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
 
 const RenderForm = (props) => {
   const [itemType, setItem] = useState("");
-  const [Description, setDesc] = useState("");
-  const [Cost, setCost] = useState("");
+  const [description, setDesc] = useState("");
+  const [cost, setCost] = useState("");
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
@@ -29,8 +29,8 @@ const RenderForm = (props) => {
       .collection(db)
       .add({
         Item_Type: itemType,
-        Cost: Cost,
-        Description: Description,
+        Cost: cost,
+        Description: description,
         Image_url: imageUrl,
       })
       .then((item) => {
@@ -87,14 +87,14 @@ const RenderForm = (props) => {
         <Input
           placeholder="Cost"
           name="Cost"
-          value={Cost}
+          value={cost}
           onChange={(e) => setCost(e.target.value)}
         />
         <br></br>
         <textarea
           placeholder="Description"
           name="Description"
-          value={Description}
+          value={description}
           onChange={(e) => setDesc(e.target.value)}
         />
         <br></br>

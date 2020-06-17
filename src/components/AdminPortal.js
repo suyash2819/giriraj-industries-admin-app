@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import { fire } from "../config/FireBase";
 import "../CSS/AdminPortal.css";
 import RenderForm from "./RenderForm";
+import Button from "@material-ui/core/Button";
 
 const AdminPortal = () => {
-  const [showmenform, setShowMenForm] = useState(false);
-  const [showwomenform, setShowWomenForm] = useState(false);
-  const [showkidsform, setShowKidsForm] = useState(false);
-  const [showcovidform, setShowCovidForm] = useState(false);
+  const [ShowMenForm, setShowMenForm] = useState(false);
+  const [ShowWomenForm, setShowWomenForm] = useState(false);
+  const [ShowKidsForm, setShowKidsForm] = useState(false);
+  const [ShowCovidForm, setShowCovidForm] = useState(false);
 
   const logout = () => {
     fire.auth().signOut();
   };
 
-  const changeState = (category) => {
+  const updateState = (category) => {
     if (category === "Men") {
       setShowMenForm(true);
     } else if (category === "Women") {
@@ -29,43 +30,62 @@ const AdminPortal = () => {
     <>
       <div className="Heading">
         <h1>Men</h1>
-        {showmenform ? <RenderForm db="Men" /> : null}
-        <button className="btn btn-primary" onClick={() => changeState("Men")}>
+        {ShowMenForm ? <RenderForm db="Men" /> : null}
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          onClick={() => updateState("Men")}
+        >
           Add Item
-        </button>
+        </Button>
       </div>
       <div className="Heading">
         <h1>Women</h1>
-        {showwomenform ? <RenderForm db="Women" /> : null}
-        <button
-          className="btn btn-primary"
-          onClick={() => changeState("Women")}
+        {ShowWomenForm ? <RenderForm db="Women" /> : null}
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          onClick={() => updateState("Women")}
         >
           Add Item
-        </button>
+        </Button>
       </div>
       <div className="Heading">
         <h1>Kids</h1>
-        {showkidsform ? <RenderForm db="Kids" /> : null}
-        <button className="btn btn-primary" onClick={() => changeState("Kids")}>
+        {ShowKidsForm ? <RenderForm db="Kids" /> : null}
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          onClick={() => updateState("Kids")}
+        >
           Add Item
-        </button>
+        </Button>
       </div>
       <div className="Heading">
         <h1>Covid</h1>
-        {showcovidform ? <RenderForm db="Covid" /> : null}
-        <button
-          className="btn btn-primary"
-          onClick={() => changeState("Covid")}
+        {ShowCovidForm ? <RenderForm db="Covid" /> : null}
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          onClick={() => updateState("Covid")}
         >
           Add Item
-        </button>
+        </Button>
       </div>
       <hr></hr>
       <center>
-        <button className="btn btn-primary" onClick={logout}>
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          onClick={logout}
+        >
           LogOut
-        </button>
+        </Button>
       </center>
     </>
   );

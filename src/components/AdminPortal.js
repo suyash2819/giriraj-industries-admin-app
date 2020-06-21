@@ -16,7 +16,9 @@ const AdminPortal = () => {
   const [showForms, setShowForms] = useState(initialFormValue);
   const sectionArray = [
     { title: sections.men, val: sections.men },
-    { title: "Women", val: sections.women },
+    { title: sections.women, val: sections.women },
+     { title: sections.kids, val: sections.kids },
+    { title: sections.covid, val: sections.covid },
     { title: "Kids", val: sections.kids },
     { title: "Covid", val: sections.covid },
   ];

@@ -4,4 +4,3 @@ export const sections = {
   kids: "Kids",
   covid: "Covid",
 };
-// export const sections = ["Men", "Women", "Kids", "Covid"];

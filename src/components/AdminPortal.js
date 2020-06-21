@@ -3,7 +3,7 @@ import { fire } from "../config/FireBase";
 import "../CSS/AdminPortal.css";
 import RenderForm from "./ItemDisplayForm";
 import Button from "@material-ui/core/Button";
-import { sections } from "./Data";
+import { sections } from "./data";
 
 const initialFormValue = {
   [sections.men]: false,
@@ -15,10 +15,10 @@ const initialFormValue = {
 const AdminPortal = () => {
   const [showForms, setShowForms] = useState(initialFormValue);
   const sectionArray = [
-    { title: "Men", val: sections.men },
-    { title: "Women", val: sections.women },
-    { title: "Kids", val: sections.kids },
-    { title: "Covid", val: sections.covid },
+    { title: sections.men, val: sections.men },
+    { title: sections.women, val: sections.women },
+    { title: sections.kids, val: sections.kids },
+    { title: sections.covid, val: sections.covid },
   ];
 
   const logout = () => {

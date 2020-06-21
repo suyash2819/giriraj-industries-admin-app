@@ -17,8 +17,15 @@ const AdminPortal = () => {
   const sectionArray = [
     { title: sections.men, val: sections.men },
     { title: sections.women, val: sections.women },
+<<<<<<< HEAD
     { title: sections.kids, val: sections.kids },
     { title: sections.covid, val: sections.covid },
+=======
+     { title: sections.kids, val: sections.kids },
+    { title: sections.covid, val: sections.covid },
+    { title: "Kids", val: sections.kids },
+    { title: "Covid", val: sections.covid },
+>>>>>>> 6633f9aa368ed41d4827c5dda2b7b379cc02f1a5
   ];
 
   const logout = () => {

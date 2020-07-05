@@ -7,6 +7,8 @@ import { db } from "../../config/FireBase";
 import OptionDisplay from "../OptionDIsplay";
 import { addOptionData } from "./KidsFunction";
 import { manipulateData } from "./KidsFunction";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const ItemTypeForm = (props) => {
   const { updateItemValue } = props;
@@ -24,7 +26,16 @@ const KidsOptionDisplay = (props) => {
   const [itemTypeDisplay, setItemTypeDisplay] = useState(false);
   const [getItemType, setItemType] = useState("");
   const [kidsData, setKidsData] = useState("");
-  const [optionDisplay, setOptionDisplay] = useState(false);
+  const [viewOption, setOptionDisplay] = useState(false);
+  const [showAlert, setShowAlert] = useState({
+    success: null,
+    message: null,
+    show: false,
+  });
+
+  const alertMessageCallback = (success, message) => {
+    setShowAlert({ success, message, show: true });
+  };
 
   const itemTypeInputDisplay = () => {
     setItemTypeDisplay(true);
@@ -38,6 +49,10 @@ const KidsOptionDisplay = (props) => {
     getItemValue(e.target.value);
   };
 
+  const handleAlertOnClose = () => {
+    setShowAlert(false);
+  };
+
   useEffect(() => {
     db.collection("Options").onSnapshot((snapshot) => {
       const data = snapshot.docs.map((doc) => ({
@@ -45,10 +60,9 @@ const KidsOptionDisplay = (props) => {
         ...doc.data(),
       }));
 
-      let KidsItem = [];
-      KidsItem = manipulateData(data);
-      if (KidsItem === null) KidsItem = [];
-      setKidsData(KidsItem);
+      let kidsItem = [];
+      kidsItem = manipulateData(data) || [];
+      setKidsData(kidsItem);
       setOptionDisplay(true);
     });
   }, []);
@@ -56,7 +70,7 @@ const KidsOptionDisplay = (props) => {
   return (
     <>
       <NativeSelect name="Item_Type" onChange={handleItemChange}>
-        {optionDisplay ? (
+        {viewOption ? (
           <OptionDisplay data={kidsData}></OptionDisplay>
         ) : (
           <option>None</option>
@@ -76,10 +90,25 @@ const KidsOptionDisplay = (props) => {
         variant="contained"
         color="primary"
         component="span"
-        onClick={() => addOptionData(getItemType)}
+        onClick={() => addOptionData(getItemType, alertMessageCallback)}
       >
         Finalize Item To Database
       </Button>
+      <Snackbar
+        open={showAlert.show}
+        autoHideDuration={4000}
+        onClose={handleAlertOnClose}
+      >
+        {showAlert.success ? (
+          <Alert severity="success" variant="filled">
+            <strong>{showAlert.message}</strong>
+          </Alert>
+        ) : (
+          <Alert severity="error" variant="filled">
+            <strong>{showAlert.message}</strong>
+          </Alert>
+        )}
+      </Snackbar>
     </>
   );
 };

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SetionViseRender = (props) => {
+const SectionWiseRender = (props) => {
   const { db, getItemType } = props;
   if (db === "Men") {
     return <MenOptionDisplay getItemValue={getItemType}></MenOptionDisplay>;
@@ -31,6 +31,7 @@ const SetionViseRender = (props) => {
     return <CovidOptionDisplay getItemValue={getItemType}></CovidOptionDisplay>;
   }
 };
+
 const RenderForm = (props) => {
   const [itemType, setItem] = useState("");
   const [description, setDesc] = useState("");
@@ -99,7 +100,7 @@ const RenderForm = (props) => {
         autoComplete="off"
         onSubmit={addItem}
       >
-        <SetionViseRender db={db} getItemType={getItemType} />
+        <SectionWiseRender db={db} getItemType={getItemType} />
         <br></br>
         <Input
           placeholder="Cost"

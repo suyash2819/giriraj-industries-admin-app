@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import { fire } from "../../config/FireBase";
 
-export const addOptionData = (data) => {
+export const addOptionData = (data, cb) => {
   const database = fire.firestore();
   database
     .collection("Options")
@@ -10,9 +10,13 @@ export const addOptionData = (data) => {
       Kids: firebase.firestore.FieldValue.arrayUnion(data),
     })
     .then((res) => {
-      alert("Item Type Saved");
+      cb(true, "Item Type Saved Successfully!");
+    })
+    .catch((err) => {
+      cb(false, "Some Error Has Occured", err);
     });
 };
+
 export const manipulateData = (data) => {
   let item = null;
   for (let index = 0; index < data.length; index++) {

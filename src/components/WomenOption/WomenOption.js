@@ -7,6 +7,8 @@ import OptionDisplay from "../OptionDIsplay";
 import { addOptionData } from "./WomenFunction";
 import { manipulateData } from "./WomenFunction";
 import { db } from "../../config/FireBase";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const ItemTypeForm = (props) => {
   const { updateItemValue } = props;
@@ -23,8 +25,17 @@ const WomenOptionDisplay = (props) => {
   const { getItemValue } = props;
   const [itemTypeDisplay, setItemTypeDisplay] = useState(false);
   const [getItemType, setItemType] = useState("");
-  const [womenData, setwomenData] = useState("");
-  const [optionDisplay, setOptionDisplay] = useState(false);
+  const [womenData, setWomenData] = useState("");
+  const [viewOption, setOptionDisplay] = useState(false);
+  const [showAlert, setShowAlert] = useState({
+    success: null,
+    message: null,
+    show: false,
+  });
+
+  const alertMessageCallback = (success, message) => {
+    setShowAlert({ success, message, show: true });
+  };
 
   const itemTypeInputDisplay = () => {
     setItemTypeDisplay(true);
@@ -38,16 +49,19 @@ const WomenOptionDisplay = (props) => {
     getItemValue(e.target.value);
   };
 
+  const handleAlertOnClose = () => {
+    setShowAlert(false);
+  };
+
   useEffect(() => {
     db.collection("Options").onSnapshot((snapshot) => {
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      let WomenItem = [];
-      WomenItem = manipulateData(data);
-      if (WomenItem === null) WomenItem = [];
-      setwomenData(WomenItem);
+      let womenItem = [];
+      womenItem = manipulateData(data) || [];
+      setWomenData(womenItem);
       setOptionDisplay(true);
     });
   }, []);
@@ -55,7 +69,7 @@ const WomenOptionDisplay = (props) => {
   return (
     <>
       <NativeSelect name="Item_Type" onChange={handleItemChange}>
-        {optionDisplay ? (
+        {viewOption ? (
           <OptionDisplay data={womenData}></OptionDisplay>
         ) : (
           <option>None</option>
@@ -75,10 +89,25 @@ const WomenOptionDisplay = (props) => {
         variant="contained"
         color="primary"
         component="span"
-        onClick={() => addOptionData(getItemType)}
+        onClick={() => addOptionData(getItemType, alertMessageCallback)}
       >
         Finalize Item To Database
       </Button>
+      <Snackbar
+        open={showAlert.show}
+        autoHideDuration={4000}
+        onClose={handleAlertOnClose}
+      >
+        {showAlert.success ? (
+          <Alert severity="success" variant="filled">
+            <strong>{showAlert.message}</strong>
+          </Alert>
+        ) : (
+          <Alert severity="error" variant="filled">
+            <strong>{showAlert.message}</strong>
+          </Alert>
+        )}
+      </Snackbar>
     </>
   );
 };

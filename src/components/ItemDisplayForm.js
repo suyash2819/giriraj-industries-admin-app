@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import { fire, storage } from "../config/FireBase";
+import MenOptionDisplay from "./MenOption/MenOption";
+import WomenOptionDisplay from "./WomenOption/WomenOption";
+import CovidOptionDisplay from "./CovidOption/CovidOption";
+import KidsOptionDisplay from "./KidsOption/KidsOption";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +18,19 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+const SectionWiseRender = (props) => {
+  const { db, getItemType } = props;
+  if (db === "Men") {
+    return <MenOptionDisplay getItemValue={getItemType}></MenOptionDisplay>;
+  } else if (db === "Women") {
+    return <WomenOptionDisplay getItemValue={getItemType}></WomenOptionDisplay>;
+  } else if (db === "Kids") {
+    return <KidsOptionDisplay getItemValue={getItemType}></KidsOptionDisplay>;
+  } else if (db === "Covid") {
+    return <CovidOptionDisplay getItemValue={getItemType}></CovidOptionDisplay>;
+  }
+};
 
 const RenderForm = (props) => {
   const [itemType, setItem] = useState("");
@@ -71,6 +88,10 @@ const RenderForm = (props) => {
     );
   };
 
+  const getItemType = (item) => {
+    setItem(item);
+  };
+
   return (
     <>
       <form
@@ -79,14 +100,8 @@ const RenderForm = (props) => {
         autoComplete="off"
         onSubmit={addItem}
       >
-        <Input
-          placeholder="Item Type"
-          name="Item_Type"
-          value={itemType}
-          onChange={(e) => setItem(e.target.value)}
-        />
+        <SectionWiseRender db={db} getItemType={getItemType} />
         <br></br>
-
         <Input
           placeholder="Cost"
           name="Cost"

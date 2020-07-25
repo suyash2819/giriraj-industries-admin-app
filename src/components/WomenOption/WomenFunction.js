@@ -4,7 +4,6 @@ import { validateData } from "../Validation";
 
 export const addOptionData = (data, womendata, cb) => {
   const validation = validateData(data, womendata);
-  console.log(validation);
   const database = fire.firestore();
   if (validation) {
     database

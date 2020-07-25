@@ -28,7 +28,6 @@ const AdminPortal = () => {
   const updateState = (category) => {
     let obj = { ...showForms };
     obj[category] = true;
-    console.log(obj);
     setShowForms(obj);
   };
 

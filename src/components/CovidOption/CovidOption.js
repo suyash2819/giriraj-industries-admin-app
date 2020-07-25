@@ -25,7 +25,7 @@ const CovidOptionDisplay = (props) => {
   const { getItemValue } = props;
   const [itemTypeDisplay, setItemTypeDisplay] = useState(false);
   const [getItemType, setItemType] = useState("");
-  const [covidDate, setCovidData] = useState("");
+  const [covidData, setCovidData] = useState("");
   const [viewOption, setOptionDisplay] = useState(false);
   const [showAlert, setShowAlert] = useState({
     success: null,
@@ -71,7 +71,7 @@ const CovidOptionDisplay = (props) => {
     <>
       <NativeSelect name="Item_Type" onChange={handleItemChange}>
         {viewOption ? (
-          <OptionDisplay data={covidDate}></OptionDisplay>
+          <OptionDisplay data={covidData}></OptionDisplay>
         ) : (
           <option>None</option>
         )}
@@ -90,7 +90,9 @@ const CovidOptionDisplay = (props) => {
         variant="contained"
         color="primary"
         component="span"
-        onClick={() => addOptionData(getItemType, alertMessageCallback)}
+        onClick={() =>
+          addOptionData(getItemType, covidData, alertMessageCallback)
+        }
       >
         Finalize Item To Database
       </Button>

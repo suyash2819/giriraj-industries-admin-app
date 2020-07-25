@@ -1,20 +1,27 @@
 import firebase from "firebase";
 import { fire } from "../../config/FireBase";
+import { validateData } from "../Validation";
 
-export const addOptionData = (data, cb) => {
+export const addOptionData = (data, covidData, cb) => {
+  const validation = validateData(data, covidData);
   const database = fire.firestore();
-  database
-    .collection("Options")
-    .doc("cn0clrcGVWfzmDiLaHvW")
-    .update({
-      Covid: firebase.firestore.FieldValue.arrayUnion(data),
-    })
-    .then((res) => {
-      cb(true, "Item Type Saved Successfully!");
-    })
-    .catch((err) => {
-      cb(false, "Some Error Has Occured", err);
-    });
+  validation
+    ? database
+        .collection("Options")
+        .doc("cn0clrcGVWfzmDiLaHvW")
+        .update({
+          Covid: firebase.firestore.FieldValue.arrayUnion(data),
+        })
+        .then((res) => {
+          cb(true, "Item Type Saved Successfully!");
+        })
+        .catch((err) => {
+          cb(false, "Some Error Has Occured", err);
+        })
+    : cb(
+        false,
+        "Item Type is already present, kindly check the list in dropdown"
+      );
 };
 
 export const manipulateData = (data) => {

@@ -1,13 +1,13 @@
 export const validateData = (itemType, options) => {
-  var count = 0;
-  options.forEach((element) => {
+  for (var i = 0; i < options.length; i++) {
     if (
-      element.trim().split(" ").join("").toLowerCase() ===
-      itemType.trim().split(" ").join("").toLowerCase()
+      options[i].trim().split(" ").join("").toLowerCase() ===
+        itemType.trim().split(" ").join("").toLowerCase() ||
+      itemType.trim() === ""
     ) {
-      count++;
+      return false;
     }
-  });
-  if (count > 0) return false;
-  else return true;
+  }
+
+  return true;
 };

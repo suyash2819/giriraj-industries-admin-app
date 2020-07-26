@@ -5,7 +5,9 @@ const OptionDisplay = (props) => {
   return (
     <>
       {data.map((item, index) => (
-        <option key={index}>{item}</option>
+        <>
+          <option key={index}>{item}</option>
+        </>
       ))}
     </>
   );

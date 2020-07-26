@@ -89,7 +89,9 @@ const WomenOptionDisplay = (props) => {
         variant="contained"
         color="primary"
         component="span"
-        onClick={() => addOptionData(getItemType, alertMessageCallback)}
+        onClick={() =>
+          addOptionData(getItemType, womenData, alertMessageCallback)
+        }
       >
         Finalize Item To Database
       </Button>

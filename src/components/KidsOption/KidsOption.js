@@ -90,7 +90,9 @@ const KidsOptionDisplay = (props) => {
         variant="contained"
         color="primary"
         component="span"
-        onClick={() => addOptionData(getItemType, alertMessageCallback)}
+        onClick={() =>
+          addOptionData(getItemType, kidsData, alertMessageCallback)
+        }
       >
         Finalize Item To Database
       </Button>

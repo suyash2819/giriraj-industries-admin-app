@@ -44,6 +44,7 @@ const RenderForm = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [itemName, setItemName] = useState("");
   const [addedOnFrontPage, setAddedOnFrontPage] = useState(false);
+  
   const [sizeAvailability, setSizeAvailability] = useState({
     S: false,
     M: false,

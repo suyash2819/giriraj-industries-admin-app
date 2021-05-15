@@ -44,10 +44,11 @@ const RenderForm = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [itemName, setItemName] = useState("");
   const [addedOnFrontPage, setAddedOnFrontPage] = useState(false);
-  
+
   const [sizeAvailability, setSizeAvailability] = useState({
     S: false,
     M: false,
+    L: false,
     XL: false,
     XXL: false,
     XXXL: false,
@@ -73,6 +74,7 @@ const RenderForm = (props) => {
   let sizes = [
     "S",
     "M",
+    "L",
     "XL",
     "XXL",
     "XXXL",
@@ -144,6 +146,7 @@ const RenderForm = (props) => {
         setSizeAvailability({
           S: false,
           M: false,
+          L: false,
           XL: false,
           XXL: false,
           XXXL: false,
@@ -279,15 +282,6 @@ const RenderForm = (props) => {
               onChange={handlesizeChange}
               label={size}
             />
-
-            {/* <Input
-              type="number"
-              placeholder="Quantity"
-              style={{ width: "80px" }}
-              name={size}
-              inputProps={{ min: "0" }}
-              onChange={handleChange}
-            /> */}
           </>
         ))}
         <br></br>
@@ -311,14 +305,6 @@ const RenderForm = (props) => {
                 ></div>
               }
             />
-            {/* <Input
-              type="number", 
-              placeholder="Quantity"
-              style={{ width: "80px" }}
-              name={size}
-              inputProps={{ min: "0" }}
-              onChange={handleChange}
-            /> */}
           </>
         ))}
         <br></br>

@@ -3,7 +3,7 @@ import { fire } from "../config/FireBase";
 import "../CSS/AdminPortal.css";
 import RenderForm from "./ItemDisplayForm";
 import Button from "@material-ui/core/Button";
-import { sections } from "./data";
+import { sections, frontItemCollection } from "./Data";
 
 const initialFormValue = {
   [sections.men]: false,
@@ -14,6 +14,8 @@ const initialFormValue = {
 
 const AdminPortal = () => {
   const [showForms, setShowForms] = useState(initialFormValue);
+  const [frontItemForm, setFrontItemForm] = useState(false);
+
   const sectionArray = [
     { title: sections.men, val: sections.men },
     { title: sections.women, val: sections.women },
@@ -29,6 +31,9 @@ const AdminPortal = () => {
     let obj = { ...showForms };
     obj[category] = true;
     setShowForms(obj);
+  };
+  const updateFrontItemState = () => {
+    setFrontItemForm(true);
   };
 
   return (
@@ -50,7 +55,19 @@ const AdminPortal = () => {
         );
       })}
       <hr></hr>
+
       <center>
+        <h4>Add Items For Front Page</h4>
+        {frontItemForm ? <RenderForm db={frontItemCollection} /> : null}
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          onClick={() => updateFrontItemState()}
+        >
+          Add Front Page Item
+        </Button>
+        <hr></hr>
         <Button
           variant="contained"
           color="primary"

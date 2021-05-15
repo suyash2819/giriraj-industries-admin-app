@@ -7,6 +7,7 @@ import MenOptionDisplay from "./MenOption/MenOption";
 import WomenOptionDisplay from "./WomenOption/WomenOption";
 import CovidOptionDisplay from "./CovidOption/CovidOption";
 import KidsOptionDisplay from "./KidsOption/KidsOption";
+import { frontItemCollection } from "./Data";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,7 +101,16 @@ const RenderForm = (props) => {
         autoComplete="off"
         onSubmit={addItem}
       >
-        <SectionWiseRender db={db} getItemType={getItemType} />
+        {db !== frontItemCollection ? (
+          <SectionWiseRender db={db} getItemType={getItemType} />
+        ) : (
+          <Input
+            placeholder="Item Type"
+            name="Item Type"
+            value={itemType}
+            onChange={(e) => setItem(e.target.value)}
+          />
+        )}
         <br></br>
         <Input
           placeholder="Cost"

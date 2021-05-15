@@ -2,6 +2,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import { fire, storage } from "../config/FireBase";
 import MenOptionDisplay from "./MenOption/MenOption";
 import WomenOptionDisplay from "./WomenOption/WomenOption";
@@ -38,7 +40,57 @@ const RenderForm = (props) => {
   const [cost, setCost] = useState("");
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [sizeAvailability, setSizeAvailability] = useState({
+    S: false,
+    M: false,
+    XL: false,
+    XXL: false,
+    XXXL: false,
+    "4XL": false,
+    "5XL": false,
+    "6XL": false,
+    "7XL": false,
+    "8XL": false,
+    "9XL": false,
+  });
+  const [colorAvailability, setColorAvailability] = useState({
+    red: false,
+    black: false,
+    yellow: false,
+    gray: false,
+    maroon: false,
+    green: false,
+    blue: false,
+    navy: false,
+    purple: false,
+  });
 
+  let sizes = [
+    "S",
+    "M",
+    "XL",
+    "XXL",
+    "XXXL",
+    "4XL",
+    "5XL",
+    "6XL",
+    "7XL",
+    "8XL",
+    "9XL",
+  ];
+
+  let colors = [
+    "red",
+    "black",
+    "yellow",
+    "gray",
+    "maroon",
+    "green",
+    "blue",
+    "navy",
+    "purple",
+  ];
   const classes = useStyles();
   const { db } = props;
 
@@ -52,6 +104,9 @@ const RenderForm = (props) => {
         Cost: cost,
         Description: description,
         Image_url: imageUrl,
+        Sizes_Available: sizeAvailability,
+        Color_Available: colorAvailability,
+        Item_Name: itemName,
       })
       .then((item) => {
         alert("item saved");
@@ -60,6 +115,31 @@ const RenderForm = (props) => {
         setImageUrl("");
         setImage("");
         setItem("");
+        setItemName("");
+        setSizeAvailability({
+          S: false,
+          M: false,
+          XL: false,
+          XXL: false,
+          XXXL: false,
+          "4XL": false,
+          "5XL": false,
+          "6XL": false,
+          "7XL": false,
+          "8XL": false,
+          "9XL": false,
+        });
+        setColorAvailability({
+          red: false,
+          black: false,
+          yellow: false,
+          gray: false,
+          maroon: false,
+          green: false,
+          blue: false,
+          navy: false,
+          purple: false,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -92,6 +172,23 @@ const RenderForm = (props) => {
     setItem(item);
   };
 
+  const handlesizeChange = (e) => {
+    console.log(sizeAvailability);
+
+    setSizeAvailability({
+      ...sizeAvailability,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  const handlecolorChange = (e) => {
+    console.log(colorAvailability);
+
+    setColorAvailability({
+      ...colorAvailability,
+      [e.target.name]: e.target.checked,
+    });
+  };
   return (
     <>
       <form
@@ -107,6 +204,12 @@ const RenderForm = (props) => {
           name="Cost"
           value={cost}
           onChange={(e) => setCost(e.target.value)}
+        />
+        <Input
+          placeholder="Item Name"
+          name="Item_Name"
+          value={itemName}
+          onChange={(e) => setItemName(e.target.value)}
         />
         <br></br>
         <textarea
@@ -134,6 +237,57 @@ const RenderForm = (props) => {
           Upload Photo
         </Button>
         <br></br>
+        <h3>Availaibility Of Sizes For This Item</h3>
+        {sizes.map((size) => (
+          <>
+            <FormControlLabel
+              control={<Checkbox name={size} color="primary" />}
+              checked={sizeAvailability[size]}
+              onChange={handlesizeChange}
+              label={size}
+            />
+
+            {/* <Input
+              type="number"
+              placeholder="Quantity"
+              style={{ width: "80px" }}
+              name={size}
+              inputProps={{ min: "0" }}
+              onChange={handleChange}
+            /> */}
+          </>
+        ))}
+        <br></br>
+        <h3>Availaibility Of color For This Item</h3>
+        {colors.map((color) => (
+          <>
+            <FormControlLabel
+              control={<Checkbox name={color} color="primary" />}
+              checked={colorAvailability[color]}
+              onChange={handlecolorChange}
+              label={
+                <div
+                  name={color}
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    margin: "5px",
+                    backgroundColor: color,
+                    display: "inline-block",
+                  }}
+                ></div>
+              }
+            />
+            {/* <Input
+              type="number", 
+              placeholder="Quantity"
+              style={{ width: "80px" }}
+              name={size}
+              inputProps={{ min: "0" }}
+              onChange={handleChange}
+            /> */}
+          </>
+        ))}
         <center>
           <Button type="submit" variant="contained" color="primary">
             Submit

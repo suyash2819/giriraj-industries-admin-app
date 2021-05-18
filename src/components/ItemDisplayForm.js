@@ -10,7 +10,6 @@ import WomenOptionDisplay from "./WomenOption/WomenOption";
 import CovidOptionDisplay from "./CovidOption/CovidOption";
 import KidsOptionDisplay from "./KidsOption/KidsOption";
 import { frontItemCollection } from "./Data";
-import { logDOM } from "@testing-library/dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,12 +115,8 @@ const RenderForm = (props) => {
           Color_Available: colorAvailability,
           Item_Name: itemName,
         })
-        .then((item) => {
-          console.log("item added for front page");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((item) => {})
+        .catch((err) => {});
     }
 
     database

@@ -4,3 +4,5 @@ export const sections = {
   kids: "Kids",
   covid: "Covid",
 };
+
+export const frontItemCollection = "FrontPageItems";

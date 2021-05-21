@@ -3,7 +3,7 @@ import { fire } from "../config/FireBase";
 import "../CSS/AdminPortal.css";
 import RenderForm from "./ItemDisplayForm";
 import Button from "@material-ui/core/Button";
-import { sections } from "./data";
+import { sections, frontItemCollection } from "./Data";
 
 const initialFormValue = {
   [sections.men]: false,
@@ -14,6 +14,7 @@ const initialFormValue = {
 
 const AdminPortal = () => {
   const [showForms, setShowForms] = useState(initialFormValue);
+
   const sectionArray = [
     { title: sections.men, val: sections.men },
     { title: sections.women, val: sections.women },
@@ -50,6 +51,7 @@ const AdminPortal = () => {
         );
       })}
       <hr></hr>
+
       <center>
         <Button
           variant="contained"

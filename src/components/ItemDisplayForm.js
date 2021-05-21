@@ -9,6 +9,7 @@ import MenOptionDisplay from "./MenOption/MenOption";
 import WomenOptionDisplay from "./WomenOption/WomenOption";
 import CovidOptionDisplay from "./CovidOption/CovidOption";
 import KidsOptionDisplay from "./KidsOption/KidsOption";
+import { frontItemCollection } from "./Data";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +42,12 @@ const RenderForm = (props) => {
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [itemName, setItemName] = useState("");
+  const [addedOnFrontPage, setAddedOnFrontPage] = useState(false);
+
   const [sizeAvailability, setSizeAvailability] = useState({
     S: false,
     M: false,
+    L: false,
     XL: false,
     XXL: false,
     XXXL: false,
@@ -69,6 +73,7 @@ const RenderForm = (props) => {
   let sizes = [
     "S",
     "M",
+    "L",
     "XL",
     "XXL",
     "XXXL",
@@ -97,6 +102,23 @@ const RenderForm = (props) => {
   const addItem = (e) => {
     e.preventDefault();
     const database = fire.firestore();
+
+    if (addedOnFrontPage) {
+      database
+        .collection(frontItemCollection)
+        .add({
+          Item_Type: itemType,
+          Cost: cost,
+          Description: description,
+          Image_url: imageUrl,
+          Sizes_Available: sizeAvailability,
+          Color_Available: colorAvailability,
+          Item_Name: itemName,
+        })
+        .then((item) => {})
+        .catch((err) => {});
+    }
+
     database
       .collection(db)
       .add({
@@ -119,6 +141,7 @@ const RenderForm = (props) => {
         setSizeAvailability({
           S: false,
           M: false,
+          L: false,
           XL: false,
           XXL: false,
           XXXL: false,
@@ -160,7 +183,6 @@ const RenderForm = (props) => {
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
-            console.log(url);
             setImageUrl(url);
             alert("Image saved");
           });
@@ -173,8 +195,6 @@ const RenderForm = (props) => {
   };
 
   const handlesizeChange = (e) => {
-    console.log(sizeAvailability);
-
     setSizeAvailability({
       ...sizeAvailability,
       [e.target.name]: e.target.checked,
@@ -182,12 +202,14 @@ const RenderForm = (props) => {
   };
 
   const handlecolorChange = (e) => {
-    console.log(colorAvailability);
-
     setColorAvailability({
       ...colorAvailability,
       [e.target.name]: e.target.checked,
     });
+  };
+
+  const handleAddedOnFrontPage = (e) => {
+    setAddedOnFrontPage(e.target.checked);
   };
   return (
     <>
@@ -197,7 +219,16 @@ const RenderForm = (props) => {
         autoComplete="off"
         onSubmit={addItem}
       >
-        <SectionWiseRender db={db} getItemType={getItemType} />
+        {db !== frontItemCollection ? (
+          <SectionWiseRender db={db} getItemType={getItemType} />
+        ) : (
+          <Input
+            placeholder="Item Type"
+            name="Item Type"
+            value={itemType}
+            onChange={(e) => setItem(e.target.value)}
+          />
+        )}
         <br></br>
         <Input
           placeholder="Cost"
@@ -246,15 +277,6 @@ const RenderForm = (props) => {
               onChange={handlesizeChange}
               label={size}
             />
-
-            {/* <Input
-              type="number"
-              placeholder="Quantity"
-              style={{ width: "80px" }}
-              name={size}
-              inputProps={{ min: "0" }}
-              onChange={handleChange}
-            /> */}
           </>
         ))}
         <br></br>
@@ -278,16 +300,15 @@ const RenderForm = (props) => {
                 ></div>
               }
             />
-            {/* <Input
-              type="number", 
-              placeholder="Quantity"
-              style={{ width: "80px" }}
-              name={size}
-              inputProps={{ min: "0" }}
-              onChange={handleChange}
-            /> */}
           </>
         ))}
+        <br></br>
+        <FormControlLabel
+          control={<Checkbox name="" color="primary" />}
+          checked={addedOnFrontPage}
+          onChange={handleAddedOnFrontPage}
+          label="To Be Added On The Front Page ?"
+        />
         <center>
           <Button type="submit" variant="contained" color="primary">
             Submit

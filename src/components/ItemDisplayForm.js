@@ -103,22 +103,6 @@ const RenderForm = (props) => {
     e.preventDefault();
     const database = fire.firestore();
 
-    if (addedOnFrontPage) {
-      database
-        .collection(frontItemCollection)
-        .add({
-          Item_Type: itemType,
-          Cost: cost,
-          Description: description,
-          Image_url: imageUrl,
-          Sizes_Available: sizeAvailability,
-          Color_Available: colorAvailability,
-          Item_Name: itemName,
-        })
-        .then((item) => {})
-        .catch((err) => {});
-    }
-
     database
       .collection(db)
       .add({
@@ -130,7 +114,24 @@ const RenderForm = (props) => {
         Color_Available: colorAvailability,
         Item_Name: itemName,
       })
-      .then((item) => {
+      .then((doc) => {
+        if (addedOnFrontPage) {
+          database
+            .collection(frontItemCollection)
+            .doc(doc.id)
+            .set({
+              Item_Type: itemType,
+              Cost: cost,
+              Description: description,
+              Image_url: imageUrl,
+              Sizes_Available: sizeAvailability,
+              Color_Available: colorAvailability,
+              Item_Name: itemName,
+            })
+            .then((item) => {})
+            .catch((err) => {});
+        }
+
         alert("item saved");
         setCost("");
         setDesc("");

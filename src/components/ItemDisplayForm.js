@@ -10,7 +10,6 @@ import WomenOptionDisplay from "./WomenOption/WomenOption";
 import CovidOptionDisplay from "./CovidOption/CovidOption";
 import KidsOptionDisplay from "./KidsOption/KidsOption";
 import { frontItemCollection } from "./Data";
-import { logDOM } from "@testing-library/dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,9 +43,11 @@ const RenderForm = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [itemName, setItemName] = useState("");
   const [addedOnFrontPage, setAddedOnFrontPage] = useState(false);
+
   const [sizeAvailability, setSizeAvailability] = useState({
     S: false,
     M: false,
+    L: false,
     XL: false,
     XXL: false,
     XXXL: false,
@@ -72,6 +73,7 @@ const RenderForm = (props) => {
   let sizes = [
     "S",
     "M",
+    "L",
     "XL",
     "XXL",
     "XXXL",
@@ -101,26 +103,6 @@ const RenderForm = (props) => {
     e.preventDefault();
     const database = fire.firestore();
 
-    if (addedOnFrontPage) {
-      database
-        .collection(frontItemCollection)
-        .add({
-          Item_Type: itemType,
-          Cost: cost,
-          Description: description,
-          Image_url: imageUrl,
-          Sizes_Available: sizeAvailability,
-          Color_Available: colorAvailability,
-          Item_Name: itemName,
-        })
-        .then((item) => {
-          console.log("item added for front page");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
     database
       .collection(db)
       .add({
@@ -132,7 +114,24 @@ const RenderForm = (props) => {
         Color_Available: colorAvailability,
         Item_Name: itemName,
       })
-      .then((item) => {
+      .then((doc) => {
+        if (addedOnFrontPage) {
+          database
+            .collection(frontItemCollection)
+            .doc(doc.id)
+            .set({
+              Item_Type: itemType,
+              Cost: cost,
+              Description: description,
+              Image_url: imageUrl,
+              Sizes_Available: sizeAvailability,
+              Color_Available: colorAvailability,
+              Item_Name: itemName,
+            })
+            .then((item) => {})
+            .catch((err) => {});
+        }
+
         alert("item saved");
         setCost("");
         setDesc("");
@@ -143,6 +142,7 @@ const RenderForm = (props) => {
         setSizeAvailability({
           S: false,
           M: false,
+          L: false,
           XL: false,
           XXL: false,
           XXXL: false,
@@ -278,15 +278,6 @@ const RenderForm = (props) => {
               onChange={handlesizeChange}
               label={size}
             />
-
-            {/* <Input
-              type="number"
-              placeholder="Quantity"
-              style={{ width: "80px" }}
-              name={size}
-              inputProps={{ min: "0" }}
-              onChange={handleChange}
-            /> */}
           </>
         ))}
         <br></br>
@@ -310,14 +301,6 @@ const RenderForm = (props) => {
                 ></div>
               }
             />
-            {/* <Input
-              type="number", 
-              placeholder="Quantity"
-              style={{ width: "80px" }}
-              name={size}
-              inputProps={{ min: "0" }}
-              onChange={handleChange}
-            /> */}
           </>
         ))}
         <br></br>

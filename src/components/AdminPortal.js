@@ -4,6 +4,8 @@ import "../CSS/AdminPortal.css";
 import RenderForm from "./ItemDisplayForm";
 import Button from "@material-ui/core/Button";
 import { sections, frontItemCollection } from "./Data";
+import { Link } from "react-router-dom";
+import firebase from "firebase";
 
 const initialFormValue = {
   [sections.men]: false,
@@ -14,7 +16,7 @@ const initialFormValue = {
 
 const AdminPortal = () => {
   const [showForms, setShowForms] = useState(initialFormValue);
-
+  // const [setlogout, setLogOut] = useState(true);
   const sectionArray = [
     { title: sections.men, val: sections.men },
     { title: sections.women, val: sections.women },
@@ -60,6 +62,18 @@ const AdminPortal = () => {
           onClick={logout}
         >
           LogOut
+        </Button>
+      </center>
+      <br />
+      <center>
+        <Button variant="contained" color="primary" component="span">
+          <Link
+            to="/orders"
+            className="nav-link"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            Show all orders
+          </Link>
         </Button>
       </center>
     </>

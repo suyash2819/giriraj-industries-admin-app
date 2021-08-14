@@ -16,7 +16,6 @@ const initialFormValue = {
 
 const AdminPortal = () => {
   const [showForms, setShowForms] = useState(initialFormValue);
-  // const [setlogout, setLogOut] = useState(true);
   const sectionArray = [
     { title: sections.men, val: sections.men },
     { title: sections.women, val: sections.women },

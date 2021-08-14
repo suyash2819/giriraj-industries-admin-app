@@ -26,7 +26,6 @@ const Orders = () => {
   };
 
   const handleUpdateStatus = (order) => {
-    // const breakOrderStatus = orderStatus.split("_");
     let breakOrderStatus;
     for (const property in orderStatus) {
       breakOrderStatus = property.split("_");

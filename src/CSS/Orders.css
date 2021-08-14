@@ -1,0 +1,12 @@
+th,
+thead,
+td {
+  border: 2px solid black;
+}
+table {
+  font-size: 13px;
+}
+.updateButton {
+  text-transform: capitalize !important;
+  font-size: 80% !important;
+}
